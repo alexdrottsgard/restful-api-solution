@@ -1,0 +1,28 @@
+{
+  "name": "restful-api-solution",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexdrottsgard/restful-api-solution.git"
+  },
+  "author": "Alexander Drottsgård",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexdrottsgard/restful-api-solution/issues"
+  },
+  "homepage": "https://github.com/alexdrottsgard/restful-api-solution#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
