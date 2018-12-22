@@ -37,7 +37,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', upload.single('image'), (req, res, next) => {
-    // console.log(req.file.originalname);
     res.status(200).json({
         message: 'Image uploaded',
         checkSum: crypto.createHash('sha256').update(req.file.originalname).digest('hex')
@@ -49,9 +48,7 @@ router.get('/:Checksum', (req, res, next) => {
     console.log(checkSum);
     if (fs.existsSync('./uploads/' + checkSum)) {
         res.status(200).json({
-            message: "Found image with checksum: " + checkSum,
-            decrypted: crypto.createDecipheriv('sha256', 'hex').dec
-            
+            message: "Found image with checksum: " + checkSum            
         });
     } else {
         res.status(404).json({
