@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         cb(null, './uploads');
     },
     filename: function(req, file, cb) {
-        cb(null, crypto.createHash('sha256').update(file.originalname).digest('hex'));
+        cb(null, crypto.createHash('sha256').update(file.originalname).digest('hex') + ".jpg");
     }
 });
 
@@ -43,19 +43,21 @@ router.post('/', upload.single('image'), (req, res, next) => {
     });
 });
 
-router.get('/:Checksum', (req, res, next) => {
-    const checkSum = req.params.Checksum;
-    console.log(checkSum);
-    if (fs.existsSync('./uploads/' + checkSum)) {
-        res.status(200).json({
-            message: "Found image with checksum: " + checkSum            
-        });
-    } else {
-        res.status(404).json({
-            message: "Couldn't find image with checksum: " + checkSum
-        });
-    }
-    
+router.get('/:checksum', (req, res, next) => {
+    const checksum = req.params.checksum;
+
+    fs.readdirSync('./uploads').forEach(file => {
+        fileChecksum = file.substring(0, file.indexOf('.'));
+        if (fileChecksum === checksum) {
+            res.status(200).json({
+                message: "Found image with checksum: " + checksum            
+            });
+        }
+    });
+
+    res.status(404).json({
+        message: "Couldn't find image with checksum: " + checkSum
+    });    
 });
 
 module.exports = router;
