@@ -1,6 +1,5 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
+const router = require('koa-router')();
+const multer = require('koa-multer');
 const crypto = require('crypto');
 const fs = require('fs');
 
@@ -28,36 +27,36 @@ const upload = multer(
             fileSize: 1000 * 1000 * 1.5
         },
         fileFilter: fileFilter
-    });
+    }
+);
 
-router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling GET requests for /image'
-    });
-});
-
-router.post('/', upload.single('image'), (req, res, next) => {
-    res.status(200).json({
+router.post('/image', upload.single('image'), async (ctx, next) => {
+    ctx.status = 200;
+    ctx.body = {
         message: 'Image uploaded',
-        checkSum: crypto.createHash('sha256').update(req.file.originalname).digest('hex')
-    });
+        checkSum: crypto.createHash('sha256').update(ctx.req.file.originalname).digest('hex')
+    };
 });
 
-router.get('/:checksum', (req, res, next) => {
-    const checksum = req.params.checksum;
+router.get('/image/:checksum', async (ctx, next) => {
+    const checksum = ctx.params.checksum;
 
     fs.readdirSync('./uploads').forEach(file => {
         fileChecksum = file.substring(0, file.indexOf('.'));
         if (fileChecksum === checksum) {
-            res.status(200).json({
+            ctx.status = 200;
+            ctx.body = {
                 message: "Found image with checksum: " + checksum            
-            });
+            };
         }
     });
 
-    res.status(404).json({
-        message: "Couldn't find image with checksum: " + checksum
-    });    
+    if (ctx.status !== 200) {
+        ctx.status = 404;
+        ctx.body = {
+            message: "Couldn't find image with checksum: " + checksum
+        };
+    }
 });
 
 module.exports = router;
