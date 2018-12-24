@@ -25,7 +25,7 @@ const upload = multer(
     {
         storage: storage,
         limits: {
-            fileSize: 1024 * 1024 * 1.5
+            fileSize: 1000 * 1000 * 1.5
         },
         fileFilter: fileFilter
     });
@@ -56,7 +56,7 @@ router.get('/:checksum', (req, res, next) => {
     });
 
     res.status(404).json({
-        message: "Couldn't find image with checksum: " + checkSum
+        message: "Couldn't find image with checksum: " + checksum
     });    
 });
 
