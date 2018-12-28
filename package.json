@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon app.js"
   },
   "repository": {
@@ -18,10 +18,12 @@
   },
   "homepage": "https://github.com/alexdrottsgard/restful-api-solution#readme",
   "dependencies": {
+    "jest": "^23.6.0",
     "koa": "^2.6.2",
     "koa-logger": "^3.2.0",
     "koa-multer": "^1.0.2",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "supertest": "^3.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"

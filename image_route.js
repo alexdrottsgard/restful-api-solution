@@ -38,6 +38,13 @@ router.post('/image', upload.single('image'), async (ctx, next) => {
     };
 });
 
+router.get('/image', async (ctx, next) => {
+    ctx.status = 200;
+    ctx.body = {
+        message: 'Handling /image'
+    };
+});
+
 router.get('/image/:checksum', async (ctx, next) => {
     const checksum = ctx.params.checksum;
 
