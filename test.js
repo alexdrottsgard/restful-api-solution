@@ -27,3 +27,13 @@ describe("GET route = /image/:checksum ", () => {
         expect(response.body.message).toEqual("Found image with checksum: " + checksum);
     });
 });
+
+describe("GET route = /image/:checksum ", () => {
+    test("should respond as expected", async () => {
+        const checksum = "000false000"
+        const response = await request(server).get("/image/" + checksum);
+        expect(response.status).toEqual(404);
+        expect(response.type).toEqual("application/json");
+        expect(response.body.message).toEqual("Couldn't find image with checksum: " + checksum);
+    });
+});
