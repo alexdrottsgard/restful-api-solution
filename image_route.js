@@ -34,7 +34,7 @@ router.post('/image', upload.single('image'), async (ctx, next) => {
     ctx.status = 200;
     ctx.body = {
         message: 'Image uploaded',
-        checkSum: crypto.createHash('sha256').update(ctx.req.file.originalname).digest('hex')
+        checksum: crypto.createHash('sha256').update(ctx.req.file.originalname).digest('hex')
     };
 });
 

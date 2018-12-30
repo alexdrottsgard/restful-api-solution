@@ -9,22 +9,22 @@ const PORT = process.env.PORT || 3000;
 
 app.use(logger());
 
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.body = {
+        error: {
+            message: err.message
+        }
+    };
+  }
+});
+
 app.use(imageRoutes.routes());
 app.use(imageRoutes.allowedMethods());
-// app.listen(3000);
-  
-// app.on('error', (err, ctx) => {
-//     console.log("error method", err.message)
-//     ctx.status = err.status || 500;
-//     ctx.body = {
-//         error: {
-//             message: err.message
-//         }
-//     };
-// });
 
-const server = app.listen(PORT).on("error", err => {
-    console.error(err);
-  });
+const server = app.listen(PORT);
 
 module.exports = server;
