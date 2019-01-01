@@ -13,7 +13,13 @@ app.use(async (ctx, next) => {
   try {
     await next();
   } catch (err) {
-    ctx.status = err.status || 500;
+    if (err.message === 'Wrong file type, please use .JPG, .PNG or .GIF') {
+      ctx.status = 415;
+    } else if (err.message === 'File too large') {
+      ctx.status = 413;
+    } else {
+      ctx.status = 500;
+    }
     ctx.body = {
         error: {
             message: err.message
