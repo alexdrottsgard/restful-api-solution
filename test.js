@@ -52,7 +52,7 @@ describe("415: POST route = /image/ ", () => {
         const response = await request(server).post("/image/").attach('image', './testFiles/wrongFileForTest.txt');
         expect(response.status).toEqual(415);
         expect(response.type).toEqual("application/json");
-        expect(response.body.message).toEqual('Wrong file type, please use .JPG, .PNG or .GIF');
+        expect(response.body.error.message).toEqual('Wrong file type, please use .JPG, .PNG or .GIF');
     });
 });
 
@@ -61,6 +61,6 @@ describe("413: POST route = /image/ ", () => {
         const response = await request(server).post("/image/").attach('image', './testFiles/imageForTestBig.jpg');
         expect(response.status).toEqual(413);
         expect(response.type).toEqual("application/json");
-        expect(response.body.message).toEqual('File too large');
+        expect(response.body.error.message).toEqual('File too large');
     });
 });
